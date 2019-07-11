@@ -42,3 +42,10 @@ if(leftMoney < 50) {
     console.log('10% tip')
 }
 
+// ternary operator
+// (consition) ? truth : falsy
+
+var dis = (leftMoney < 50) ? 20 : (leftMoney > 50 && leftMoney < 200) ? 15 : 10;
+
+
+console.log(dis);
