@@ -63,9 +63,7 @@ function substract (x,y,cb) {
 };
 
 
-var rs = substract(10,5, function(a) {
-    return a*a
-});
+var rs = substract(10,5, square);
 
 console.log(rs);
 

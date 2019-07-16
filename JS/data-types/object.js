@@ -104,4 +104,21 @@ var value = false;
 
 person[k] = value;
 
-console.log(person.married)
+console.log(person.married);
+
+
+
+
+
+var bottle = {
+    color: 'Blue',
+    size: 1,
+    description : function (cl) {
+        console.log('Color is '+cl)
+    }
+}
+
+
+console.log(bottle.color)
+
+bottle.description('red');
