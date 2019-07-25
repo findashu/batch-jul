@@ -104,3 +104,14 @@ let totalYear = inventors.reduce((initial, ele) => initial + (ele.passed - ele.y
 
 console.log(year);
 console.log(totalYear);
+
+// forEach();
+
+
+inventors.forEach(function(ele, ind, arr)  {
+    console.log(ele)
+});
+
+
+// for in
+// for of
