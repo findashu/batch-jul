@@ -9,6 +9,8 @@ function randomNumber(min,max) {
 
 
 
+// document.body
+
 let bd = document.querySelector('body');
 
 bd.style.backgroundColor = `rgb(${randomNumber(1,255)},${randomNumber(1,255)},${randomNumber(1,255)})`;
