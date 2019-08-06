@@ -1,0 +1,27 @@
+/* Universal Selectors */
+
+* {
+    color:orange;
+}
+
+/* tagnames */
+
+h1 {
+    color: green;
+}
+
+/* classname */
+
+.secondHead {
+    color: blueviolet;
+}
+
+/* id selector */
+
+#myPara {
+    color:darkcyan;
+}
+
+h1 {
+    color: red;
+}
