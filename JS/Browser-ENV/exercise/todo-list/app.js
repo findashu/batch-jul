@@ -10,18 +10,20 @@ function addItems() {
         value,
         done: false
     }
-
     items.push(itm);
     localStorage.setItem('items', JSON.stringify(items));
     renderList(items, todoItems);
     inpt.value = '';
 }
 
+    // ['js','javascript']
+
 function renderList(list, displayList) {
     displayList.innerHTML = list.map(function(ele,i) {
         return `
                 <li>
                     <input type="checkbox" data-id="${i}" ${ele.done ? 'checked':''} id=items${i}>
+                    
                     <label for="items${i}">${ele.value}</label>
                 </li>
                 `
