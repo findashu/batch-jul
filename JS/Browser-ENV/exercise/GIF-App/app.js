@@ -52,8 +52,6 @@ function getData() {
     }
 
     xhr.onreadystatechange = handler;
-
-
     xhr.open('GET', 'https://api.giphy.com/v1/gifs/translate?api_key=VV8DtITCPM0dCnPGEEPux8nruQan9cWZ&s='+value, true);
     xhr.send();
 }
