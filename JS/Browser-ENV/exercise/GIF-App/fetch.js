@@ -29,6 +29,8 @@ function getData() {
        p.innerText = 'No gif found';
        displayImg.appendChild(p);
    });
+   inpt.value = '';
+   inpt.focus();
 }
 
 sbmtBtn.addEventListener('click', getData);
