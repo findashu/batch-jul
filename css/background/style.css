@@ -1,0 +1,14 @@
+.bg {
+    background-color: aqua;
+}
+
+
+div {
+    background-image: url('../../media/lg.jpg');
+    background-repeat: no-repeat;/* repeat-x repeat-y round*/
+    /* background-position: center; */
+
+    background-position-x: right;
+    background-position-y: bottom;
+}
+

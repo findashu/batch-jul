@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: gray;
+    padding: 10px;
+}
+
+.box {
+    width: 24%;
+    border: 1px solid white;
+    padding: 10px;
+    float: left;
+    margin: 0px 3px;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    text-align: justify;
+}
+
+.clear {
+    clear: both;
+}

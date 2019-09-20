@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Test Media type Print</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <header>
+        <ul id="navbar" class="navbar">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">About</a></li>
+            <li class="sidenav"><a href="#">Signup</a></li>
+            <li class="sidenav"><a href="#">Login</a></li>
+            <li class="toggle-nav"><a id="toggle" href="#">&#9776;</a></li>
+        </ul>
+    </header>
+
+    <div>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi placeat rem, ipsum magnam aspernatur ut sunt labore, tempore, amet cum quibusdam iusto. Id voluptas eius minima rem excepturi, accusamus perspiciatis! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic consectetur perspiciatis quo cupiditate perferendis dolore minus. Vel exercitationem aspernatur, quae quo quibusdam tempora rerum? Totam, neque autem! Temporibus, distinctio eius.
+        <a href="https://www.google.com">Google</a> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas exercitationem praesentium reiciendis debitis recusandae adipisci, pariatur modi suscipit nisi, minus ut dolore quidem eligendi repellendus. Quaerat illum dolores voluptate magnam? <a href="https://www.google.com">Facebook</a>
+
+        </p>
+    </div>
+
+    <script>
+        let toggle = document.querySelector('#toggle'); // anchcor hamburger
+
+        let menubar = document.querySelector('#navbar'); // menu ul
+
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            if(menubar.className == 'navbar') {
+                menubar.className += ' responsive';
+            }else {
+                menubar.className = 'navbar';
+            }
+        });
+    </script>
+
+
+
+
+</body>
+</html>

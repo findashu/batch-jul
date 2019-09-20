@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav {
+    background-color: tan;
+    padding: 10px;
+}
+
+li {
+    list-style: none; /*disc, circle, square*/
+    display: inline;
+    padding: 0 5px;
+    margin: 0 5px;
+
+}
+
+a {
+    text-decoration: none;
+}
