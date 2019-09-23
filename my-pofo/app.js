@@ -15,11 +15,19 @@ app.set('views', __dirname+'/views');
 
 app.use(express.static(__dirname+'/static'));
 
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+
 app.use(appMiddleware.logger);
 
 app.get('/', routes.index);
 
 app.get('/projects', routes.projectList);
+app.get('/blogs', routes.blogList);
+app.get('/login', routes.getLogin);
+app.post('/login', routes.doLogin);
+app.get('/signup', routes.getSignup);
+app.post('/signup', routes.doSignup);
 
 app.get('/projects/:alias', routes.projectDetail)
 

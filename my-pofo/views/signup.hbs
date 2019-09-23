@@ -1,0 +1,26 @@
+<form class="form-signin" action="/signup" method="POST">
+    {{!-- <img class="mb-4" src="{{ site.baseurl }}/docs/{{ site.docs_version }}/assets/brand/bootstrap-solid.svg" alt=""
+        width="72" height="72"> --}}
+    <h1 class="h3 mb-3 font-weight-normal">Please Sign Up</h1>
+
+    <label for="inputName" class="sr-only">Name</label>
+    <input type="text" id="inputName" name="name" class="form-control" placeholder="Name" required autofocus>
+
+    <label for="inputMobile" class="sr-only">Mobile</label>
+    <input type="number" id="inputMobile" name="mobile" class="form-control" placeholder="Mobile" required>
+
+
+    <label for="inputEmail" class="sr-only">Email address</label>
+    <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required>
+
+
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+
+    <p class="mt-3 mb-3 text-muted">Have an account <a href="/login">Login</a></p>
+
+    <p class="mt-2 mb-3 text-muted">&copy; Ashutosh Mishra 2019</p>
+</form>
