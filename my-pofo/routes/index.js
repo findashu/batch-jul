@@ -7,6 +7,7 @@ module.exports.index = function(req,res) {
 
 
 module.exports.projectList = function(req,res) {
+   
     res.render('project-list', {
         title: 'Project Lists ',
         navProject: true
@@ -39,10 +40,30 @@ module.exports.getLogin = (req,res) => {
     })
 }
 
+
+
+const users = [{email:'test@test.com', password:'test'}, {email:'hello@test.com', password:'1234'}]
+
+
 module.exports.doLogin = (req,res) => {
     let body = req.body;
-    console.log(body);
-    res.redirect('/');
+
+    let usr = users.filter(ele => body.email == ele.email)[0];
+
+    if(usr && usr.password == body.password) {
+        console.log(body);
+        req.session.user = usr;
+        req.session.isLoggedIn = true;
+
+
+        res.redirect('/admin');
+    }else {
+        res.render('login', {
+            title: 'Login',
+            layout:'signin-layout',
+            error: 'User credentials not correct'
+        })
+    }
 }
 
 module.exports.getSignup = (req,res) => {
@@ -59,4 +80,12 @@ module.exports.doSignup = (req,res) => {
 
 
     res.redirect('/login');
+}
+
+module.exports.admin = (req,res) => {
+    console.log(req.session);
+
+    res.render('dashboard', {
+        title:'Dashboard'
+    })
 }

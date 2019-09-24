@@ -1,5 +1,6 @@
 const express = require('express');
 const hbs = require('hbs');
+const session = require('express-session');
 hbs.registerPartials(__dirname+'/views/partials')
 
 const errorHandler = require('./middlewares/errorHandler');
@@ -15,6 +16,15 @@ app.set('views', __dirname+'/views');
 
 app.use(express.static(__dirname+'/static'));
 
+app.use(session({
+    secret:'my secret',
+    saveUninitialized: false,
+    resave:false,
+    cookie: {maxAge:1000000}
+}));
+
+
+
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
@@ -28,6 +38,8 @@ app.get('/login', routes.getLogin);
 app.post('/login', routes.doLogin);
 app.get('/signup', routes.getSignup);
 app.post('/signup', routes.doSignup);
+
+app.get('/admin', appMiddleware.authenticate, routes.admin)
 
 app.get('/projects/:alias', routes.projectDetail)
 
