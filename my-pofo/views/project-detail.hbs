@@ -13,7 +13,7 @@
                         </div>
 
                         <div class="my-2">
-                            <a href="#" class="btn btn-secondary">Github Link</a>
+                            <a href="{{project.githubUrl}}" class="btn btn-secondary">Github Link</a>
                         </div>
                     </div>
 
@@ -21,25 +21,24 @@
 
                     <div>
                         <h2>Tags</h2>
-                        <a href="#" class="badge badge-primary">Javascript</a>
-                        <a href="#" class="badge badge-danger">HTML</a>
-                        <a href="#" class="badge badge-success">CSS</a>
+                        {{#each project.tags}}
+
+                        <a href="#" class="badge badge-{{this.class}}">{{this.name}}</a>
+                        {{/each}}
                     </div>
 
                     <hr>
 
                     <div>
                         <h2>Related Projects</h2>
+
+                        {{#each project.relatedProjects}}
                         <div class="my-2">
-                            <a href="#">Image Gallery</a>
+                            <a href="/projects/{{this.link}}">{{this.name}}</a>
                         </div>
 
-                        <div class="my-2">
-                            <a href="#">Image Changer</a>
-                        </div>
+                        {{/each}}
                     </div>
-
-
                 </div>
 
 
@@ -48,12 +47,12 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="/">Home</a></li>
                             <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Number Guessing Game</li>
+                            <li class="breadcrumb-item active" aria-current="page">{{project.name}}</li>
                         </ol>
                     </nav>
 
-                    <h1>Number Guesing Game</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, voluptatum nostrum? Ratione assumenda deserunt totam aut fugiat odit a corporis qui est quos. Voluptatem illo quasi repellendus temporibus corporis minima.</p>
+                    <h1>{{project.name}}</h1>
+                    <p>{{project.description}}</p>
 
 
                 </div>

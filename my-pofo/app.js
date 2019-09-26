@@ -38,6 +38,9 @@ app.get('/login', routes.getLogin);
 app.post('/login', routes.doLogin);
 app.get('/signup', routes.getSignup);
 app.post('/signup', routes.doSignup);
+app.get('/contact', routes.contact);
+app.post('/contact', routes.doContact);
+
 
 app.get('/admin', appMiddleware.authenticate, routes.admin)
 

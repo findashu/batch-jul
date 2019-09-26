@@ -1,3 +1,5 @@
+const data = require('../data');
+
 module.exports.index = function(req,res) {
     res.render('index', {
         title: 'MyPortfolio - Ashutosh Mishra',
@@ -7,10 +9,11 @@ module.exports.index = function(req,res) {
 
 
 module.exports.projectList = function(req,res) {
-   
+    console.log(data.myProjects);
     res.render('project-list', {
         title: 'Project Lists ',
-        navProject: true
+        navProject: true,
+        projects :data.myProjects
     });
 }
 
@@ -18,11 +21,13 @@ module.exports.projectList = function(req,res) {
 module.exports.projectDetail = function(req,res) {
 
     let alias = req.params.alias;
-    console.log(alias)
-
+    let index = data.projectIndex[alias];
+    // console.log(alias)
+    // console.log(data.myProjects[index])
     res.render('project-detail', {
         title:'Project Detail',
-        navProject: true
+        navProject: true,
+        project: data.myProjects[index]
     })
 }
 
@@ -88,4 +93,22 @@ module.exports.admin = (req,res) => {
     res.render('dashboard', {
         title:'Dashboard'
     })
+}
+
+
+module.exports.contact = (req,res) => {
+    res.render('contact', {
+        title:'Contact Us',
+        navContact:true
+    })
+}
+
+module.exports.doContact = (req,res) => {
+    let body = req.body;
+
+    if(body.name == ''){
+        res.status(400).json({message:'Name field is required'});
+    }else {
+        res.json({'message':'Contact submitted successfully'});
+    }
 }
