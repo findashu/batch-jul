@@ -21,7 +21,7 @@ module.exports.projectList = function(req,res) {
 module.exports.projectDetail = function(req,res) {
 
     let alias = req.params.alias;
-    let index = data.projectIndex[alias];
+    let index = data.projectIndex[alias];   
     // console.log(alias)
     // console.log(data.myProjects[index])
     res.render('project-detail', {
@@ -47,21 +47,24 @@ module.exports.getLogin = (req,res) => {
 
 
 
-const users = [{email:'test@test.com', password:'test'}, {email:'hello@test.com', password:'1234'}]
+const users = [{name:'ashu',email:'test@test.com', password:'test'}, {name:'Hello',email:'hello@test.com', password:'1234'}]
 
 
 module.exports.doLogin = (req,res) => {
     let body = req.body;
-
     let usr = users.filter(ele => body.email == ele.email)[0];
 
     if(usr && usr.password == body.password) {
         console.log(body);
         req.session.user = usr;
+        res.locals.user = usr;
         req.session.isLoggedIn = true;
 
 
-        res.redirect('/admin');
+       res.render('admin/dashboard', {
+           title:'Dashboard',
+           layout:'layout-admin'
+       })
     }else {
         res.render('login', {
             title: 'Login',
@@ -90,8 +93,9 @@ module.exports.doSignup = (req,res) => {
 module.exports.admin = (req,res) => {
     console.log(req.session);
 
-    res.render('dashboard', {
-        title:'Dashboard'
+    res.render('admin/dashboard', {
+        title:'Dashboard',
+        layout:'layout-admin'
     })
 }
 
@@ -111,4 +115,29 @@ module.exports.doContact = (req,res) => {
     }else {
         res.json({'message':'Contact submitted successfully'});
     }
+}
+
+
+module.exports.logout = (req,res) => {
+    req.session.isLoggedIn = false;
+    req.session.user = '';
+    res.redirect('/');
+}
+
+module.exports.adminProjects = (req,res) => {
+    res.render('admin/projects', {
+        title:'Project List',
+        layout:'layout-admin',
+        projects: data.myProjects
+    })
+}
+
+module.exports.adminProjectDetail = (req,res) => {
+    let alias = req.params.alias;
+    let index = data.projectIndex[alias]; 
+    res.render('admin/projectDetail', {
+        itle:'Project Detail',
+        layout:'layout-admin',
+        project: data.myProjects[index]
+    })
 }

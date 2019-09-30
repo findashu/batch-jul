@@ -29,6 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 app.use(appMiddleware.logger);
+app.use(appMiddleware.authenticated);
 
 app.get('/', routes.index);
 
@@ -40,9 +41,14 @@ app.get('/signup', routes.getSignup);
 app.post('/signup', routes.doSignup);
 app.get('/contact', routes.contact);
 app.post('/contact', routes.doContact);
+app.get('/logout', routes.logout);
 
 
-app.get('/admin', appMiddleware.authenticate, routes.admin)
+app.get('/admin/dashboard', appMiddleware.authenticate, routes.admin);
+
+app.get('/admin/projects', appMiddleware.authenticate, routes.adminProjects);
+app.get('/admin/projects/:alias',appMiddleware.authenticate, routes.adminProjectDetail);
+
 
 app.get('/projects/:alias', routes.projectDetail)
 
