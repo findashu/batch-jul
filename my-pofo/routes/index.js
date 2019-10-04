@@ -1,24 +1,41 @@
 const data = require('../data');
+const router = require('express').Router();
+const MongoClient = require('mongodb').MongoClient;
 
-module.exports.index = function(req,res) {
+const dbUrl = 'mongodb://localhost:27017';
+
+let db;
+
+
+MongoClient.connect(dbUrl, {useNewUrlParser:true,useUnifiedTopology: true}, function(err, client) {
+    if(err) {
+        console.log('Error connecting with DB',err);
+    }else {
+        console.log('Connected to Database Server');
+        db = client.db('mypofo-app');
+    }
+})
+
+
+router.get('/', function(req,res) {
+
     res.render('index', {
         title: 'MyPortfolio - Ashutosh Mishra',
         layout:'layout'
     });
-}
+})
 
 
-module.exports.projectList = function(req,res) {
+router.get('/projects', function(req,res) {
     console.log(data.myProjects);
     res.render('project-list', {
         title: 'Project Lists ',
         navProject: true,
         projects :data.myProjects
     });
-}
+})
 
-
-module.exports.projectDetail = function(req,res) {
+router.get('/projects/:alias', function(req,res) {
 
     let alias = req.params.alias;
     let index = data.projectIndex[alias];   
@@ -30,27 +47,31 @@ module.exports.projectDetail = function(req,res) {
         project: data.myProjects[index]
     })
 }
+)
 
-module.exports.blogList = function(req,res) {
+
+
+
+router.get('/blogs', function(req,res) {
     res.render('blogs', {
         title:'Blogs',
         navBlog:true
     })
-}
+})
 
-module.exports.getLogin = (req,res) => {
+router.get('/login', (req,res) => {
     res.render('login', {
         title: 'Login',
         layout:'signin-layout'
     })
-}
+})
 
 
 
 const users = [{name:'ashu',email:'test@test.com', password:'test'}, {name:'Hello',email:'hello@test.com', password:'1234'}]
 
 
-module.exports.doLogin = (req,res) => {
+router.post('/login', (req,res) => {
     let body = req.body;
     let usr = users.filter(ele => body.email == ele.email)[0];
 
@@ -72,42 +93,35 @@ module.exports.doLogin = (req,res) => {
             error: 'User credentials not correct'
         })
     }
-}
+})
 
-module.exports.getSignup = (req,res) => {
+router.get('/signup', (req,res) => {
     res.render('signup', {
         title: 'Create an Account',
         layout:'signin-layout'
     })
-}
+})
 
-module.exports.doSignup = (req,res) => {
+router.post('/signup', (req,res) => {
     let body = req.body;
 
     console.log(body);
 
 
     res.redirect('/login');
-}
-
-module.exports.admin = (req,res) => {
-    console.log(req.session);
-
-    res.render('admin/dashboard', {
-        title:'Dashboard',
-        layout:'layout-admin'
-    })
-}
+})
 
 
-module.exports.contact = (req,res) => {
+
+
+router.get('/contact', (req,res) => {
     res.render('contact', {
         title:'Contact Us',
         navContact:true
     })
-}
+})
 
-module.exports.doContact = (req,res) => {
+router.post('/contact', (req,res) => {
     let body = req.body;
 
     if(body.name == ''){
@@ -115,29 +129,13 @@ module.exports.doContact = (req,res) => {
     }else {
         res.json({'message':'Contact submitted successfully'});
     }
-}
+})
 
 
-module.exports.logout = (req,res) => {
+router.get('/logout',(req,res) => {
     req.session.isLoggedIn = false;
     req.session.user = '';
     res.redirect('/');
-}
+})
 
-module.exports.adminProjects = (req,res) => {
-    res.render('admin/projects', {
-        title:'Project List',
-        layout:'layout-admin',
-        projects: data.myProjects
-    })
-}
-
-module.exports.adminProjectDetail = (req,res) => {
-    let alias = req.params.alias;
-    let index = data.projectIndex[alias]; 
-    res.render('admin/projectDetail', {
-        itle:'Project Detail',
-        layout:'layout-admin',
-        project: data.myProjects[index]
-    })
-}
+module.exports = router;

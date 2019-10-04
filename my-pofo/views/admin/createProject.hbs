@@ -3,45 +3,38 @@
         <h1 class="h2">Projects</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
-                <a href="/admin/projects/create" class="btn btn-sm btn-outline-secondary">Create New</a>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Create New</button>
                 <button type="button" class="btn btn-sm btn-outline-secondary">Upload</button>
             </div>
         </div>
     </div>
 
-    <form action="#" method="POST">
+    <form action="/admin/projects/create" method="POST">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" value="{{project.name}}" name="name">
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="alias">Alias</label>
-                    <input type="text" class="form-control" id="alias" value="{{project.alias}}" name="alias" readonly>
+                    <input type="text" class="form-control" id="name" placeholder="Project Name" name="name">
                 </div>
             </div>
 
              <div class="col-md-6">
                 <div class="form-group">
                     <label for="github">Github URL</label>
-                    <input type="text" class="form-control" id="github" value="{{project.githubUrl}}" name="githubUrl">
+                    <input type="text" class="form-control" id="github" placeholder="Enter github url" name="githubUrl">
                 </div>
             </div>
 
              <div class="col-md-6">
                 <div class="form-group">
                     <label for="tags">Tags</label>
-                    <input type="text" class="form-control" id="tags" value="{{#each project.tags}}{{this.name}},{{/each}}" name="tags">
+                    <input type="text" class="form-control" id="tags" placeholder="Tags" name="tags">
                 </div>
             </div>
 
              <div class="col-md-6">
                 <div class="form-group">
-                    <textarea class="form-control" name="description" id="desc" rows="3" >{{project.description}}</textarea>
+                    <textarea class="form-control" name="description" id="desc" rows="3" >Enter Description</textarea>
                 </div>
             </div>
 
@@ -53,7 +46,7 @@
 
         </div>
 
-        <button class="btn btn-primary" type="submit">Update</button>
+        <button class="btn btn-primary" type="submit">Create Project</button>
     </form>
 
 </main>

@@ -5,7 +5,8 @@ hbs.registerPartials(__dirname+'/views/partials')
 
 const errorHandler = require('./middlewares/errorHandler');
 const appMiddleware = require('./middlewares/appmiddleware');
-const routes = require('./routes/index')
+const publicRoutes = require('./routes/index');
+const adminRouter = require('./routes/adminRoutes')
 
 const app = express();
 
@@ -31,26 +32,10 @@ app.use(express.urlencoded({extended:false}));
 app.use(appMiddleware.logger);
 app.use(appMiddleware.authenticated);
 
-app.get('/', routes.index);
 
-app.get('/projects', routes.projectList);
-app.get('/blogs', routes.blogList);
-app.get('/login', routes.getLogin);
-app.post('/login', routes.doLogin);
-app.get('/signup', routes.getSignup);
-app.post('/signup', routes.doSignup);
-app.get('/contact', routes.contact);
-app.post('/contact', routes.doContact);
-app.get('/logout', routes.logout);
+app.use('/', publicRoutes)
 
-
-app.get('/admin/dashboard', appMiddleware.authenticate, routes.admin);
-
-app.get('/admin/projects', appMiddleware.authenticate, routes.adminProjects);
-app.get('/admin/projects/:alias',appMiddleware.authenticate, routes.adminProjectDetail);
-
-
-app.get('/projects/:alias', routes.projectDetail)
+app.use('/admin',appMiddleware.authenticate, adminRouter )
 
 
 app.use(errorHandler.notFound);
