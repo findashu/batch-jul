@@ -1,17 +1,21 @@
 const express = require('express');
 const hbs = require('hbs');
+const mongoose = require('mongoose');
 const session = require('express-session');
-hbs.registerPartials(__dirname+'/views/partials')
-
+hbs.registerPartials(__dirname+'/views/partials');
 const errorHandler = require('./middlewares/errorHandler');
 const appMiddleware = require('./middlewares/appmiddleware');
 const publicRoutes = require('./routes/index');
-const adminRouter = require('./routes/adminRoutes')
+const adminRouter = require('./routes/adminRoutes');
 
 const app = express();
 
 
-// not getting
+mongoose.connect('mongodb://localhost:27017/mypofo-app',{useNewUrlParser:true, useUnifiedTopology:true})
+    .then(d => console.log('Connected with DB'))
+    .catch(err => console.log('DB Connection Error', err));
+
+
 app.set('view engine', 'hbs');
 app.set('views', __dirname+'/views');
 
@@ -23,7 +27,6 @@ app.use(session({
     resave:false,
     cookie: {maxAge:1000000}
 }));
-
 
 
 app.use(express.json());
