@@ -23,7 +23,7 @@
             <tbody>
                 {{#each projects}}
                 <tr>
-                    <td><img src="/images/mean.jpg" height="100px" width="100px"></td>
+                    <td><img src="{{this.image}}" height="100px" width="100px"></td>
                     <td><a href="/admin/projects/{{this.alias}}">{{this.name}}</a></td>
                     <td><a href="/admin/projects/{{this.alias}}">{{this.alias}}</a></td>
                     <td><a href="{{this.githubUrl}}">Link</a></td>

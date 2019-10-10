@@ -1,6 +1,21 @@
+const multer = require('multer');
+const path = require('path');
 const router = require('express').Router();
 const Project = require('../models/projectSchema');
-const ProjectService = require('../services/projectService')
+const ProjectService = require('../services/projectService');
+
+
+// console.log('pththt', path.join(__dirname, '../static/images/projects'))
+let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../static/images/projects'))
+      },
+      filename: function (req, file, cb) {
+        cb(null, file.originalname)
+      }
+})
+let upload = multer({storage: storage});
+
 
 router.get('/dashboard', (req, res) => {
     console.log(req.session);
@@ -82,6 +97,7 @@ router.post('/projects/create', (req, res, next) => {
     })
     bodyData.tags = fT || [];
 
+
     let newProject = new Project(bodyData);
 
     console.log(newProject);
@@ -111,6 +127,53 @@ router.get('/projects/:alias/delete', (req,res,next) => {
     ProjectService.deleteProject(alias).then(dt => {
         res.redirect('/admin/projects')
     }).catch(err => next(err));
+});
+
+
+
+
+router.post('/projects/:alias/update', (req,res,next) => {
+    let bodyData = req.body;
+    let alias = req.params.alias;
+    let tgsArray = bodyData.tags.split(',');
+    let classes = ['primary', 'secondary', 'danger', 'success'];
+
+    let fT = [];
+
+    tgsArray.forEach((ele, i) => {
+        let d = {
+            name: ele,
+            class: classes[i]
+        }
+        fT.push(d)
+    })
+    bodyData.tags = fT || [];
+    ProjectService.update(alias,bodyData).then(dt => {
+        res.redirect('/admin/projects');
+    }).catch(err => next(err))
+
 })
+
+
+router.get('/projects/:alias/upload-img',(req,res) => {
+    let alias = req.params.alias;
+    res.render('admin/upload', {
+        title: 'Upload Image',
+        layout: 'layout-admin',
+        actionUrl: `/admin/projects/${alias}/upload-img`
+    })
+});
+
+
+router.post('/projects/:alias/upload-img', upload.single('img'), (req,res,next) => {
+    // console.log(req.file);
+    let alias = req.params.alias;
+    ProjectService.update(alias, {image:`/images/projects/${req.file.filename}`}).then(dt => {  
+        res.redirect('/admin/projects');
+    }).catch(err => next(err))
+
+    
+})
+
 
 module.exports = router;

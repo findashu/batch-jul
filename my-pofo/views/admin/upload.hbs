@@ -1,0 +1,17 @@
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+        <h1 class="h2">Upload</h1>
+    </div>
+
+    <form action="{{actionUrl}}" enctype="multipart/form-data" method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="file">Upload</label>
+                    <input type="file" class="form-control" id="file" name="img">
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Upload</button>
+    </form>
+</main>

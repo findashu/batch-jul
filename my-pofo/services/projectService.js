@@ -32,3 +32,12 @@ module.exports.deleteProject = (alias) => {
 
     });
 }
+
+module.exports.update = (alias, bodyData) => {
+
+    return new Promise((resolve,reject) => {
+        Project.findOneAndUpdate({alias:alias}, {$set:bodyData, $inc:{'__v':1}},{new:true}).then(dt => {
+            resolve(dt);
+        }).catch(err => reject(err))
+    })
+}
