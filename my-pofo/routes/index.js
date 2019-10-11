@@ -1,24 +1,9 @@
 const data = require('../data');
 const router = require('express').Router();
-const MongoClient = require('mongodb').MongoClient;
-
-const dbUrl = 'mongodb://localhost:27017';
-
-let db;
-
-
-MongoClient.connect(dbUrl, {useNewUrlParser:true,useUnifiedTopology: true}, function(err, client) {
-    if(err) {
-        console.log('Error connecting with DB',err);
-    }else {
-        console.log('Connected to Database Server');
-        db = client.db('mypofo-app');
-    }
-})
+const ProjectService = require('../services/projectService');
 
 
 router.get('/', function(req,res) {
-
     res.render('index', {
         title: 'MyPortfolio - Ashutosh Mishra',
         layout:'layout'
@@ -26,31 +11,40 @@ router.get('/', function(req,res) {
 })
 
 
-router.get('/projects', function(req,res) {
-    console.log(data.myProjects);
-    res.render('project-list', {
-        title: 'Project Lists ',
-        navProject: true,
-        projects :data.myProjects
+router.get('/projects', function(req,res,next) {
+   
+    ProjectService.projectList().then(data => {
+        res.render('project-list', {
+            title: 'Project Lists ',
+            navProject: true,
+            projects :data
+        });
+    }).catch(err => next(err));
+})
+
+router.get('/projects/:alias/demo', (req,res) => {
+    let alias = req.params.alias;
+    res.render('demo', {
+        title:'Project Demo',
+        layout:'layout-demo',
+        alias:alias
     });
 })
 
-router.get('/projects/:alias', function(req,res) {
+
+
+router.get('/projects/:alias', function(req,res,next) {
 
     let alias = req.params.alias;
-    let index = data.projectIndex[alias];   
-    // console.log(alias)
-    // console.log(data.myProjects[index])
-    res.render('project-detail', {
-        title:'Project Detail',
-        navProject: true,
-        project: data.myProjects[index]
-    })
-}
-)
-
-
-
+    
+    ProjectService.getProject(alias).then(dt => {
+        res.render('project-detail', {
+            title:'Project Detail',
+            navProject: true,
+            project: dt
+        })
+    }).catch(err => next(err))
+})
 
 router.get('/blogs', function(req,res) {
     res.render('blogs', {

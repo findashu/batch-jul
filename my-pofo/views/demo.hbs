@@ -1,0 +1,12 @@
+<iframe src="/project-demos/{{alias}}/{{alias}}/index.html" width="100%" onload="resizeIframe(this)" frameborder="0"></iframe>
+
+
+<script>
+    function resizeIframe(obj) {
+      var height = "innerHeight" in window
+        ? window.innerHeight
+        : document.documentElement.offsetHeight;
+      obj.style.height = height + 'px';
+    }
+</script>
+  

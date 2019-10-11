@@ -1,9 +1,11 @@
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+const unzip = require('unzip');
 const router = require('express').Router();
 const Project = require('../models/projectSchema');
 const ProjectService = require('../services/projectService');
-
+const UploadService = require('../services/upload');
 
 // console.log('pththt', path.join(__dirname, '../static/images/projects'))
 let storage = multer.diskStorage({
@@ -13,9 +15,9 @@ let storage = multer.diskStorage({
       filename: function (req, file, cb) {
         cb(null, file.originalname)
       }
-})
-let upload = multer({storage: storage});
+});
 
+let upload = multer({storage: storage});
 
 router.get('/dashboard', (req, res) => {
     console.log(req.session);
@@ -25,7 +27,6 @@ router.get('/dashboard', (req, res) => {
         layout: 'layout-admin'
     })
 });
-
 
 router.get('/projects', (req, res, next) => {
 
@@ -78,7 +79,6 @@ router.get('/projects/create', (req, res) => {
     })
 })
 
-
 router.post('/projects/create', (req, res, next) => {
     let bodyData = req.body;
 
@@ -108,7 +108,6 @@ router.post('/projects/create', (req, res, next) => {
     }).catch(err => next(err));
 });
 
-
 router.get('/projects/:alias', (req, res,next) => {
     let alias = req.params.alias;
    
@@ -121,16 +120,12 @@ router.get('/projects/:alias', (req, res,next) => {
     }).catch(err => next(err))    
 })
 
-
 router.get('/projects/:alias/delete', (req,res,next) => {
     let alias = req.params.alias;
     ProjectService.deleteProject(alias).then(dt => {
         res.redirect('/admin/projects')
     }).catch(err => next(err));
 });
-
-
-
 
 router.post('/projects/:alias/update', (req,res,next) => {
     let bodyData = req.body;
@@ -154,7 +149,6 @@ router.post('/projects/:alias/update', (req,res,next) => {
 
 })
 
-
 router.get('/projects/:alias/upload-img',(req,res) => {
     let alias = req.params.alias;
     res.render('admin/upload', {
@@ -164,15 +158,43 @@ router.get('/projects/:alias/upload-img',(req,res) => {
     })
 });
 
-
 router.post('/projects/:alias/upload-img', upload.single('img'), (req,res,next) => {
     // console.log(req.file);
     let alias = req.params.alias;
     ProjectService.update(alias, {image:`/images/projects/${req.file.filename}`}).then(dt => {  
         res.redirect('/admin/projects');
     }).catch(err => next(err))
+});
 
-    
+router.get('/projects/:alias/upload-demo',(req,res) => {
+    let alias = req.params.alias;
+    res.render('admin/upload', {
+        title: 'Upload Image',
+        layout: 'layout-admin',
+        actionUrl: `/admin/projects/${alias}/upload-demo`
+    })
+});
+
+router.post('/projects/:alias/upload-demo', (req,res,next) => {
+    let filename = req.params.alias+'.zip';
+    let dir = path.join(__dirname, `../static/project-demos/${req.params.alias}`);
+
+
+    function uploaded(err,sucess) {
+        if(err) {
+            next(err);
+        }else {
+            let path = dir+'/'+filename;
+            fs.createReadStream(path).pipe(unzip.Extract({ path: dir }));
+
+            fs.unlinkSync(path);
+
+            res.redirect('/admin/projects')
+        }
+    }
+
+    UploadService.uploadDemo(req,res,filename,dir, uploaded)
+
 })
 
 
