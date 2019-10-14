@@ -3,7 +3,6 @@ const path = require('path');
 const fs = require('fs');
 const unzip = require('unzip');
 const router = require('express').Router();
-const Project = require('../models/projectSchema');
 const ProjectService = require('../services/projectService');
 const UploadService = require('../services/upload');
 
@@ -82,7 +81,7 @@ router.get('/projects/create', (req, res) => {
 router.post('/projects/create', (req, res, next) => {
     let bodyData = req.body;
 
-    bodyData.alias = bodyData.name.split(' ').join('-').toLowerCase();
+
     let tgsArray = bodyData.tags.split(',');
     let classes = ['primary', 'secondary', 'danger', 'success'];
 
@@ -97,15 +96,10 @@ router.post('/projects/create', (req, res, next) => {
     })
     bodyData.tags = fT || [];
 
-
-    let newProject = new Project(bodyData);
-
-    console.log(newProject);
-
-    newProject.save().then(data => {
-        console.log(data)
+    ProjectService.createProject(bodyData).then(dt => {
         res.redirect('/admin/projects')
-    }).catch(err => next(err));
+    }).catch(err => next(err))
+    
 });
 
 router.get('/projects/:alias', (req, res,next) => {

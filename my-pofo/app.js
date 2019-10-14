@@ -1,6 +1,5 @@
 const express = require('express');
 const hbs = require('hbs');
-const mongoose = require('mongoose');
 const session = require('express-session');
 hbs.registerPartials(__dirname+'/views/partials');
 const errorHandler = require('./middlewares/errorHandler');
@@ -11,9 +10,6 @@ const adminRouter = require('./routes/adminRoutes');
 const app = express();
 
 
-mongoose.connect('mongodb://localhost:27017/mypofo-app',{useNewUrlParser:true, useUnifiedTopology:true})
-    .then(d => console.log('Connected with DB'))
-    .catch(err => console.log('DB Connection Error', err));
 
 
 app.set('view engine', 'hbs');
